@@ -7,20 +7,20 @@ export default function Intro() {
      const steps = [
         {
             icon: Upload,
-            label: 'Upload Plantegning',
-            description: 'Del din plantegning med vores AI',
+            label: 'Indsæt webadresse',
+            description: 'Paste din webadresse ind her',
             key: 'upload'
         },
         {
             icon: Sparkles,
-            label: 'Beskriv Din Stil',
-            description: 'Fortæl om dine design præferencer', 
+            label: 'Hjemmesiden analyseres',
+            description: 'Oplysninger om din hjemmeside indhentes', 
             key: 'stil'    
         },
         {
             icon: Image,
             label: 'Få AI Forslag',
-            description: 'Modtag smukke designforslag',
+            description: 'Modtag relevante AI-forslag',
             key: 'template'
         }
     ];

@@ -63,8 +63,8 @@ export default function Input({output, setOutput}: InputProps) {
             
             {error && <p className="text-red-500 text-center">{error}</p>}
             <div className="flex items-center justify-between text-left gap-6">
-                <label>Design:</label>
-                <input type="text" value={designStyle} onChange={(e) => setDesignStyle(e.target.value)} placeholder="Scandinavian" className="border border-gray-300 rounded-md p-2 w-full" />
+                <label>Webadresse:</label>
+                <input type="text" value={designStyle} onChange={(e) => setDesignStyle(e.target.value)} placeholder="" className="border border-gray-300 rounded-md p-2 w-full" />
             </div>
             <button onClick={handleSubmit} 
                 disabled={!uploadedFile || !designStyle || isLoading}
