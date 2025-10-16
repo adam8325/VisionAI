@@ -2,7 +2,7 @@
 from langgraph.graph import StateGraph, END
 from typing import TypedDict
 from langchain_openai import ChatOpenAI
-from firecrawl import FirecrawlService
+from firecrawl_service import FirecrawlService
 from prompts import DeveloperToolsPrompts
 
 llm = ChatOpenAI(model="gpt-4o-mini")
@@ -23,12 +23,18 @@ def scrape_node(state: CompanyState):
     print("🔍 Scraping website:", state["url"])
     firecrawl = FirecrawlService()
     result = firecrawl.scrape_company_pages(state["url"])
-    if not result or "markdown" not in result:
+
+    markdown = getattr(result, "markdown", None)
+    if not markdown:
         raise ValueError("Scraping failed or returned no markdown content.")
-    return {"scraped_data": result["markdown"]}
+
+    print("📝 Scrape complete, extracted markdown content.")
+    return {"scraped_data": markdown}
+
 
 def summarize_node(state: CompanyState):
     """Summarize website in 2-3 lines for quick display."""
+
     print("📝 Generating short summary...")
     system_prompt = DeveloperToolsPrompts.SUMMARIZE_SYSTEM
     user_prompt = DeveloperToolsPrompts.summarize_prompt(state["url"], state["scraped_data"])
