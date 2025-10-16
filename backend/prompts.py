@@ -2,6 +2,18 @@ class DeveloperToolsPrompts:
     """Collection of prompts for analyzing website data and AI recommendations."""
 
 
+    SUMMARIZE_SYSTEM = """Your are a professional summarizer. You create concise summaries of website content in 2-3 lines, 
+                        focusing on the main purpose and offerings of the site."""
+    
+    @staticmethod
+    def summarize_prompt(company_name: str, content: str) -> str:
+        return f"""Company: {company_name}
+                Website Content: {content[:2000]}
+
+                Give a short (2-3 sentence) description of what this company does, 
+                its products or services, and target customers."""
+
+
     ANALYSIS_SYSTEM = """You are analyzing website data and looking for AI recommendations to implement. 
                         Focus on extracting information that would be relevant to build features which are optimized using AI-technologies. Pay special attention to the company's branch, their values, services and customers."""
 
@@ -11,7 +23,6 @@ class DeveloperToolsPrompts:
                 Website Content: {content[:2500]}
 
                 Analyze the above website content and provide:
-                - summary: A short (2-3 sentence) description of what this company does, its products or services, and target customers.
                 - industry: Identify the main industry or sector the company belongs to.
                 - values_and_focus: Describe what values, goals, or focus areas the company seems to emphasize (e.g. innovation, sustainability, customer service).
                 - ai_opportunities: Briefly mention where AI might naturally fit based on what the company offers (e.g. automation, data analysis, customer engagement).
