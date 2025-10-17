@@ -4,6 +4,8 @@ from typing import TypedDict
 from langchain_openai import ChatOpenAI
 from firecrawl_service import FirecrawlService
 from prompts import DeveloperToolsPrompts
+from typing import List
+import json
 
 llm = ChatOpenAI(model="gpt-4o-mini")
 
@@ -13,7 +15,7 @@ class CompanyState(TypedDict):
     scraped_data: str
     summary: str
     analysis: str
-    recommendations: str
+    recommendations: List[str] = []
 
 
 
@@ -55,14 +57,36 @@ def analyze_node(state: CompanyState):
 
 
 def recommend_node(state: CompanyState):
-    """Generates AI implementation recommendations."""
-
+    """Generates AI implementation recommendations as a simple list."""
     print("💡 Generating AI recommendations...")
     system_prompt = DeveloperToolsPrompts.RECOMMENDATIONS_SYSTEM
     user_prompt = DeveloperToolsPrompts.recommendation_prompt(state["url"], state["analysis"])
-    response = llm.invoke([{"role": "system", "content": system_prompt},
-                           {"role": "user", "content": user_prompt}])
-    return {"recommendations": response.content}
+
+    response = llm.invoke([
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ])
+
+    raw_output = response.content.strip()
+
+    # 🔹 Clean code fences like ```json ... ```
+    if raw_output.startswith("```"):
+        raw_output = raw_output.strip("`")
+        if raw_output.lower().startswith("json"):
+            raw_output = raw_output[4:].strip()
+        raw_output = raw_output.strip()
+
+    # 🔹 Try parsing directly as a JSON list
+    try:
+        recs = json.loads(raw_output)
+        if isinstance(recs, dict) and "recommendations" in recs:
+            recs = recs["recommendations"]
+    except json.JSONDecodeError:
+        print("⚠️ JSON parse failed, returning fallback list.")
+        recs = [{"type": "General", "description": raw_output}]
+
+    return {"recommendations": recs}
+
 
 
 

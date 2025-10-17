@@ -11,7 +11,8 @@ class DeveloperToolsPrompts:
                 Website Content: {content[:2000]}
 
                 Give a short (2-3 sentence) description of what this company does, 
-                its products or services, and target customers."""
+                its products or services, and target customers.
+                Make the output in Danish."""
 
 
     ANALYSIS_SYSTEM = """You are analyzing website data and looking for AI recommendations to implement. 
@@ -45,7 +46,27 @@ class DeveloperToolsPrompts:
 
                 For each recommendation, describe:
                 - The business need or problem it addresses
-                - The proposed AI solution or technology
+                - The proposed AI solution or feature
                 - The expected outcome or benefit
 
-                Keep the tone professional, realistic, and business-oriented — as if advising company executives."""
+                Keep the tone professional, realistic, and business-oriented — as if advising company executives.
+                Make the output in Danish.
+                
+                Do so in JSON format like this:
+                
+                 [
+                    {{
+                        "type": "Quick Win",
+                        "description": "..."
+                    }},
+                    {{
+                        "type": "Medium Effort",
+                        "description": "..."
+                    }},
+                    {{
+                        "type": "Strategic Initiative",
+                        "description": "..."
+                    }}
+                ]
+                
+                """

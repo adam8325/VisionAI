@@ -1,11 +1,22 @@
 import React, { useState } from "react";
 import { Sparkles } from "lucide-react";
 
+type Recommendation = {
+  type: string;
+  description:
+    | string
+    | {
+        business_need: string;
+        proposed_solution: string;
+        expected_outcome: string;
+      };
+};
+
 export default function Input() {
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [summary, setSummary] = useState<string | null>(null);
-  const [recommendations, setRecommendations] = useState<string | null>(null);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
@@ -14,7 +25,7 @@ export default function Input() {
     setIsLoading(true);
     setError(null);
     setSummary(null);
-    setRecommendations(null);
+    setRecommendations([]);
 
     try {
       const res = await fetch("http://localhost:8000/api/analyze-url", {
@@ -24,6 +35,7 @@ export default function Input() {
       });
 
       const data = await res.json();
+      console.log("API response:", data);
 
       if (!res.ok) throw new Error(data.detail || "Fejl ved API-kald.");
 
@@ -67,7 +79,6 @@ export default function Input() {
         {isLoading ? "Analyserer..." : "Generer AI-forslag"}
       </button>
 
-      {/* ✅ Kort beskrivelse vises straks */}
       {summary && (
         <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
           <h3 className="font-semibold text-gray-800 mb-1">Kort beskrivelse:</h3>
@@ -75,13 +86,23 @@ export default function Input() {
         </div>
       )}
 
-      {/* 💡 AI-anbefalinger vises efter analyse */}
-      {recommendations && (
-        <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-          <h3 className="font-semibold text-gray-800 mb-2">AI-anbefalinger:</h3>
-          <p className="whitespace-pre-line text-gray-700 text-sm">{recommendations}</p>
+     
+      {recommendations.map((rec, i) => (
+        <div key={i} className="recommendation">
+            <h3>{rec.type}</h3>
+
+            {typeof rec.description === "string" ? (
+            <p>{rec.description}</p>
+            ) : (
+            <div className="ml-2">
+                <p><strong>Foreslået løsning:</strong> {rec.description.proposed_solution}</p>
+                <p><strong>Forretningsbehov:</strong> {rec.description.business_need}</p>
+                <p><strong>Forventet resultat:</strong> {rec.description.expected_outcome}</p>
+            </div>
+            )}  
         </div>
-      )}
+        ))}
+
     </div>
   );
 }
