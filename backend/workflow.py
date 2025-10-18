@@ -30,7 +30,6 @@ def scrape_node(state: CompanyState):
     if not markdown:
         raise ValueError("Scraping failed or returned no markdown content.")
 
-    print("📝 Scrape complete, extracted markdown content.")
     return {"scraped_data": markdown}
 
 

@@ -7,7 +7,7 @@ type Recommendation = {
     | string
     | {
         business_need: string;
-        proposed_solution: string;
+        ai_solution: string;
         expected_outcome: string;
       };
 };
@@ -52,7 +52,7 @@ export default function Input() {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex flex-col gap-20 w-full">
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       <div className="flex items-center justify-between gap-4">
@@ -79,32 +79,47 @@ export default function Input() {
           {isLoading ? "Analyserer..." : "Generer AI-forslag"}
         </button>
       </div>
-
-      {summary && (
-        <div className="bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 border border-stone-300 p-4 rounded-lg shadow-sm">
-          <h3 className="font-bold text-black mb-1">Kort beskrivelse:</h3>
-          <p className="text-black font-semibold ">{summary}</p>
-        </div>
-      )}
-
-     <div className="flex items-start justify-center gap-4">
-      {recommendations.map((rec, i) => (
-        <div key={i} className="flex flex-col gap-4 bg-linear-to-r from-cyan-50 to-indigo-100 p-4 border border-stone-300 rounded-lg ">
-            <h3 className="font-semibold text-center">{rec.type}</h3>
-
-            {typeof rec.description === "string" ? (
-            <p>{rec.description}</p>
-            ) : (
-            <div className="flex flex-col gap-4">
-                <p><strong>Foreslået løsning:</strong> {rec.description.proposed_solution}</p>
-                <p><strong>Forretningsbehov:</strong> {rec.description.business_need}</p>
-                <p><strong>Forventet resultat:</strong> {rec.description.expected_outcome}</p>
+      
+        <div>
+           {summary && (
+            <div className="bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 border border-stone-300 p-4 rounded-lg shadow-sm">
+              <h3 className="font-bold text-black mb-1">Kort beskrivelse:</h3>
+              <p className="text-black font-semibold ">{summary}</p>
             </div>
-            )}  
-        </div>
-        ))}
+          )}   
+        </div>         
 
-      </div>
+        <div className="flex items-start justify-center gap-6">
+          {recommendations.map((rec, i) => (
+            <div key={i} className="flex flex-col gap-4 bg-linear-to-r from-cyan-50 to-indigo-100 p-4 border border-stone-300 rounded-lg h-150">
+              <div className="flex items-center justify-between">
+                <p></p>
+                <h3 className="font-semibold text-center">{rec.type}</h3>
+                <p className="text-gray-800 text-sm">#{i+1}</p>
+              </div>
+                
+                {typeof rec.description === "string" ? (
+                <p>{rec.description}</p>
+                ) : (
+                <div className="flex flex-col justify-between h-full px-2 py-4">
+                  <div className=" h-2/5">
+                    <p className="text-sm "><strong>Foreslået løsning:</strong> {rec.description.ai_solution}</p>
+                  </div>
+                  <div className=" h-1/5">
+                    <hr className="border-t-2 border-indigo-200" />
+                  </div>                   
+                  <div className="h-2/5 flex flex-col gap-4">
+                    <p className="text-sm "><strong>Forretningsbehov:</strong> {rec.description.business_need}</p>
+                    <p className="text-sm "><strong>Forventet resultat:</strong> {rec.description.expected_outcome}</p>
+                  </div>
+                </div>
+                
+                )}  
+            </div>
+            ))}
+
+        </div>
+     
     </div>
   );  
 }

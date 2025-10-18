@@ -40,9 +40,9 @@ class DeveloperToolsPrompts:
                 Website Data Summary: {company_data}
 
                 Based on the website content, provide three realistic AI implementation recommendations tailored to this company:
-                1. Quick Win – a low-effort, high-impact use case that can be implemented fast and show immediate value.
-                2. Medium Effort – a more involved project that integrates AI deeper into existing operations or workflows.
-                3. Strategic Initiative – a large-scale AI transformation that could redefine key business areas or products.
+                1. Hurtig Gevinst – a low-effort, high-impact use case that can be implemented fast and show immediate value.
+                2. Målrettet Forbedring – a more involved project that integrates AI deeper into existing operations or workflows.
+                3. Strategisk Løft – a large-scale AI transformation that could redefine key business areas or products.
 
                 For each recommendation, describe:
                 - The business need or problem it addresses
