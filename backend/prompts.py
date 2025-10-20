@@ -44,29 +44,24 @@ class DeveloperToolsPrompts:
                 2. Målrettet Forbedring – a more involved project that integrates AI deeper into existing operations or workflows.
                 3. Strategisk Løft – a large-scale AI transformation that could redefine key business areas or products.
 
-                For each recommendation, describe:
-                - The business need or problem it addresses
-                - The proposed AI solution or feature
-                - The expected outcome or benefit
+                For each recommendation, provide:
+                - title: a short, expressive title for the proposed solution
+                - type: short label (e.g. "Hurtig Gevinst", "Målrettet Forbedring", "Strategisk Løft")
+                - description: an object with keys business_need, ai_solution, expected_outcome
 
-                Keep the tone professional, realistic, and business-oriented — as if advising company executives.
-                Make the output in Danish.
-                
-                Do so in JSON format like this:
-                
-                 [
-                    {{
-                        "type": "Quick Win",
-                        "description": "..."
-                    }},
-                    {{
-                        "type": "Medium Effort",
-                        "description": "..."
-                    }},
-                    {{
-                        "type": "Strategic Initiative",
-                        "description": "..."
+                Example JSON output (must be valid JSON):
+                [
+                  {{
+                    "type": "Hurtig Gevinst",
+                    "title": "Automated Payment Reminders",
+                    "description": {{
+                      "business_need": "...",
+                      "ai_solution": "...",
+                      "expected_outcome": "..."
                     }}
+                  }},
+                  ...
                 ]
-                
+
+                Keep the tone professional and output the JSON only (no code fences). Make the output in Danish.
                 """

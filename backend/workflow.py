@@ -12,6 +12,7 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 
 class CompanyState(TypedDict):
     url: str
+    company_name: str
     scraped_data: str
     summary: str
     analysis: str
@@ -30,7 +31,17 @@ def scrape_node(state: CompanyState):
     if not markdown:
         raise ValueError("Scraping failed or returned no markdown content.")
 
-    return {"scraped_data": markdown}
+    # Try to extract company name from Firecrawl metadata or fallback to domain
+    company_name = None
+    if hasattr(result, "metadata") and result.metadata:
+        company_name = getattr(result.metadata, "title", "")
+         
+
+
+    if not company_name:
+        company_name = state["url"].split("//")[-1].split("/")[0]
+
+    return {"scraped_data": markdown, "company_name": company_name}
 
 
 def summarize_node(state: CompanyState):
@@ -38,7 +49,7 @@ def summarize_node(state: CompanyState):
 
     print("📝 Generating short summary...")
     system_prompt = DeveloperToolsPrompts.SUMMARIZE_SYSTEM
-    user_prompt = DeveloperToolsPrompts.summarize_prompt(state["url"], state["scraped_data"])
+    user_prompt = DeveloperToolsPrompts.summarize_prompt(state["company_name"], state["scraped_data"])
     response = llm.invoke([{"role": "system", "content": system_prompt},
                            {"role": "user", "content": user_prompt}])
     return {"summary": response.content}

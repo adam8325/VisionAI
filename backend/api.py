@@ -23,9 +23,11 @@ def analyze_url(data: UrlInput):
     try:
         result = workflow.invoke({"url": data.url})
         return {
+            "company_name": result.get("company_name"),
             "summary": result.get("summary"),
-            "analysis": result.get("analysis"),
+            # "analysis": result.get("analysis"),
             "recommendations": result.get("recommendations")
         }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

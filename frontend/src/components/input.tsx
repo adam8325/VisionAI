@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Sparkles } from "lucide-react";
 
 type Recommendation = {
+  title: string;
   type: string;
   description:
     | string
@@ -15,6 +16,7 @@ type Recommendation = {
 export default function Input() {
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [companyName, setCompanyName] = useState<string | null>(null);
   const [summary, setSummary] = useState<string | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -41,6 +43,8 @@ export default function Input() {
 
       // ✅ Vis summary først
       setSummary(data.summary);
+      setCompanyName(data.company_name);
+      console.log("Company Name:", data.company_name);
 
       // Efter lidt delay (eller streaming senere)
       setRecommendations(data.recommendations);
@@ -69,10 +73,10 @@ export default function Input() {
         <button
           onClick={handleSubmit}
           disabled={!url || isLoading}
-          className={`flex items-center justify-center gap-2 font-semibold py-2 px-3 rounded-md cursor-pointer
+          className={`flex items-center justify-center gap-2 font-semibold py-2 px-3 rounded-md
             ${isLoading || !url
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-linear-to-r from-cyan-300 via-blue-400 to-indigo-500 text-white hover:from-indigo-500 hover:to-purple-700"
+              : "cursor-pointer bg-linear-to-r from-cyan-300 via-blue-400 to-indigo-500 text-white hover:from-indigo-500 hover:to-purple-700"
             }`}
         >
           <Sparkles className="w-5 h-5" />
@@ -83,7 +87,7 @@ export default function Input() {
         <div>
            {summary && (
             <div className="bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 border border-stone-300 p-4 rounded-lg shadow-sm">
-              <h3 className="font-bold text-black mb-1">Kort beskrivelse:</h3>
+              <h3 className="font-bold text-black mb-1">{companyName ? companyName.replace(/[|–-].*$/, "").trim() : ""}</h3>
               <p className="text-black font-semibold ">{summary}</p>
             </div>
           )}   
@@ -102,8 +106,9 @@ export default function Input() {
                 <p>{rec.description}</p>
                 ) : (
                 <div className="flex flex-col justify-between h-full px-2 py-4">
-                  <div className=" h-2/5">
-                    <p className="text-sm "><strong>Foreslået løsning:</strong> {rec.description.ai_solution}</p>
+                  <div className="flex flex-col gap-4 h-2/5">
+                    <p className="text-md font-semibold">{rec.title}</p>
+                    <p className="text-sm ">{rec.description.ai_solution}</p>
                   </div>
                   <div className=" h-1/5">
                     <hr className="border-t-2 border-indigo-200" />
