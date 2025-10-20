@@ -21,8 +21,26 @@ export default function Input() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+
+  const isValidUrl = (value: string) => {
+    try {
+      new URL(value); // native browser-validering
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   const handleSubmit = async () => {
-    if (!url) return alert("Indtast en URL først.");
+    if (!url) {
+      setError("Indtast en URL først.");
+      return;
+    }
+
+    if (!isValidUrl(url)) {
+      setError("Indtast en gyldig URL. F.eks. https://www.example.com");
+      return;
+    }
 
     setIsLoading(true);
     setError(null);

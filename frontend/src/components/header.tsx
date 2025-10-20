@@ -1,27 +1,26 @@
-import React from "react";
-import { FileCode } from "lucide-react";
+import { FileCode, Sparkles } from "lucide-react";
 
 
 export default function Header() {
     return (
-      <header className="w-full h-full border-t border-slate-300 bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 rounded-t-md p-4">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex sm:items-center gap-3">
-            <div>
-              <FileCode className="border-sky-200 rounded-xl h-9 w-9 p-1.5 text-white bg-linear-to-r from-cyan-500 via-blue-400 to-indigo-500" />
-            </div>
-            <div>
-                <h1
-                  className="text-shadow-sm text-xl sm:text-2xl font-bold bg-clip-text bg-gradient-to-bl from-indigo-900 via-indigo-400 to-indigo-900 text-transparent"
-                >
-                  VisionAI
-                </h1>
-                <p className="text-sm text-black font-bold sm:text-md text-muted-foreground">
-                  AI-optimering af din virksomhed
-                </p>
-            </div> 
+      
+      <header className="px-4 pt-10">
+        <div className="flex flex-col items-center justify-center gap-10">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-10 h-10 text-sky-100"/>
+            <h1
+                className="text-shadow-sm text-xl sm:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-400 bg-clip-text text-transparent"
+              >
+                VisionAI
+              </h1>
           </div>
+          <div className="text-center">              
+              <h2 className="font-bold sm:text-xl">
+                Opdag AI-muligheder af din virksomhed. Indtast din virksomheds webadresse for at modtage skræddersyede AI-optimeringsløsninger.
+              </h2>
+          </div> 
         </div>
       </header>
+    
     )
 }
