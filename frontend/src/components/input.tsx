@@ -4,6 +4,9 @@ import { Sparkles, Link2, Search, Zap, TrendingUp, Rocket } from "lucide-react";
 type Recommendation = {
   title: string;
   type: string;
+  impact: string;
+  time_estimate: string;
+  roi: string;
   description:
     | string
     | {
@@ -47,6 +50,7 @@ export default function Input() {
     setError(null);
     setSummary(null);
     setRecommendations([]);
+    setIsDone(false);
 
     try {
       const res = await fetch("http://localhost:8000/api/analyze-url", {
@@ -150,10 +154,19 @@ export default function Input() {
                   </div>
                   <div className="h-1/5">
                     <hr className="border-t-2 border-indigo-200" />
-                    <div className="flex items-center justify-between mt-2">
-                      <p className="text-xs text-gray-300">Tid</p>
-                      <p className="text-xs text-gray-300">Effekt</p>
-                      <p className="text-xs text-gray-300">ROI</p>
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex flex-col justify-center gap-1">
+                        <p className="text-xs text-gray-400">Tid</p>
+                        <p className="text-sm text-white font-semibold">{rec.time_estimate}</p>
+                      </div>
+                      <div className="flex flex-col justify-center gap-1">
+                        <p className="text-xs text-gray-400">Effekt</p>
+                        <p className="text-sm text-white font-semibold">{rec.impact}</p>                        
+                      </div>
+                      <div className="flex flex-col justify-center gap-1">
+                        <p className="text-xs text-gray-400">ROI</p>
+                        <p className="text-sm text-white font-semibold">{rec.roi}</p>                        
+                      </div>
                     </div>
                   </div>                   
                   <div className="h-2/5 flex flex-col gap-4">

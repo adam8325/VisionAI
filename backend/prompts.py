@@ -48,6 +48,9 @@ class DeveloperToolsPrompts:
                 - title: a short, expressive title for the proposed solution
                 - type: short label (e.g. "Hurtig Gevinst", "Målrettet Forbedring", "Strategisk Løft")
                 - description: an object with keys business_need, ai_solution, expected_outcome
+                - time_estimate: e.g. "2-3 weeks"
+                - impact: e.g. "High"
+                - roi: e.g. "3-6 months"
 
                 Example JSON output (must be valid JSON):
                 [
@@ -58,7 +61,10 @@ class DeveloperToolsPrompts:
                       "business_need": "...",
                       "ai_solution": "...",
                       "expected_outcome": "..."
-                    }}
+                    }}, 
+                    "time_estimate": "2-3 weeks",
+                    "impact": "High",
+                    "roi": "3-6 months"
                   }},
                   ...
                 ]

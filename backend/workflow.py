@@ -17,6 +17,9 @@ class CompanyState(TypedDict):
     summary: str
     analysis: str
     recommendations: List[str] = []
+    time_estimate: str
+    impact: str
+    roi: str
 
 
 
@@ -70,7 +73,7 @@ def recommend_node(state: CompanyState):
     """Generates AI implementation recommendations as a simple list."""
     print("💡 Generating AI recommendations...")
     system_prompt = DeveloperToolsPrompts.RECOMMENDATIONS_SYSTEM
-    user_prompt = DeveloperToolsPrompts.recommendation_prompt(state["url"], state["analysis"])
+    user_prompt = DeveloperToolsPrompts.recommendation_prompt(state["company_name"], state["analysis"])
 
     response = llm.invoke([
         {"role": "system", "content": system_prompt},
