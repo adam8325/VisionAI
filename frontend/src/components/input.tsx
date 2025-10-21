@@ -120,14 +120,14 @@ export default function Input() {
 
         {isDone && (
           <div className="flex flex-col items-center justify-center w-4/6 mx-auto gap-4">
-            <h3 className="text-shadow-sm text-xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-400 bg-clip-text text-transparent">AI Implementerings roadmap</h3>
+            <h3 className="text-shadow-sm text-xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-300 bg-clip-text text-transparent">AI Implementerings roadmap</h3>
             <h4 className="sm:text-lg font-semibold">Skræddersyet anbefalinger til {name}</h4>
           </div>        
         )}
 
-        <div className="flex items-start justify-center gap-6">
+        <div className="flex items-start justify-center gap-6 w-full">
           {recommendations.map((rec, i) => (
-            <div key={i} className="flex flex-col gap-4 bg-gray-900 p-4 border border-stone-300 rounded-lg h-150">
+            <div key={i} className="flex flex-col gap-4 bg-gray-900 p-4 border border-stone-300 rounded-lg w-full h-150">
               <div className="flex items-center justify-between px-2">
                 <div>
                   {icons.map((iconObj, idx) => i === idx && (
@@ -144,25 +144,27 @@ export default function Input() {
                 <p>{rec.description}</p>
                 ) : (
                 <div className="flex flex-col justify-between h-full px-2 py-4">
-                  <div className="flex flex-col gap-4 h-2/5">
-                    <p className="text-md font-semibold">{rec.title}</p>
+                  <div className="flex flex-col gap-6 h-2/5">
+                    <p className="text-xl font-semibold">{rec.title}</p>
                     <p className="text-sm ">{rec.description.ai_solution}</p>
                   </div>
-                  <div className=" h-1/5">
+                  <div className="h-1/5">
                     <hr className="border-t-2 border-indigo-200" />
+                    <div className="flex items-center justify-between mt-2">
+                      <p className="text-xs text-gray-300">Tid</p>
+                      <p className="text-xs text-gray-300">Effekt</p>
+                      <p className="text-xs text-gray-300">ROI</p>
+                    </div>
                   </div>                   
                   <div className="h-2/5 flex flex-col gap-4">
                     <p className="text-sm "><strong>Forretningsbehov:</strong> {rec.description.business_need}</p>
                     <p className="text-sm "><strong>Forventet resultat:</strong> {rec.description.expected_outcome}</p>
                   </div>
-                </div>
-                
+                </div>                
                 )}  
             </div>
             ))}
-
-        </div>
-     
+        </div>     
     </div>
   );  
 }
