@@ -3,8 +3,7 @@ import { FileCode, Sparkles } from "lucide-react";
 
 export default function Header() {
     return (
-      
-      <header className="px-4 pt-10">
+      <header className="pt-10 w-4/6">
         <div className="flex flex-col items-center justify-center gap-10">
           <div className="flex items-center gap-3">
             <Sparkles className="w-10 h-10 text-sky-100"/>
