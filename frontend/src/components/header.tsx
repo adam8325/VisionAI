@@ -8,7 +8,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Sparkles className="w-10 h-10 text-sky-100"/>
             <h1
-                className="text-shadow-sm text-xl sm:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-400 bg-clip-text text-transparent"
+                className="text-shadow-sm text-xl sm:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-300 bg-clip-text text-transparent"
               >
                 VisionAI
               </h1>

@@ -10,7 +10,6 @@ type Recommendation = {
   description:
     | string
     | {
-        business_need: string;
         ai_solution: string;
         expected_outcome: string;
       };
@@ -22,6 +21,7 @@ export default function Input() {
   const [isDone, setIsDone] = useState(false);
   const [companyName, setCompanyName] = useState<string | null>(null);
   const [summary, setSummary] = useState<string | null>(null);
+  const [branch, setBranch] = useState<string | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,6 +50,7 @@ export default function Input() {
     setError(null);
     setSummary(null);
     setRecommendations([]);
+    setBranch(null);
     setIsDone(false);
 
     try {
@@ -67,6 +68,7 @@ export default function Input() {
       setSummary(data.summary);
       setCompanyName(data.company_name);
       setRecommendations(data.recommendations);
+      setBranch(data.branch);
       setIsDone(true);
     } catch (err: any) {
       setError(err.message);
@@ -81,103 +83,160 @@ export default function Input() {
     { icon: <Rocket className="w-6 h-6"/>, color: "text-purple-400" },
   ]
 
+   const LoadingSpinner = () => (
+    <div className="flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center gap-6">
+        <div className="w-24 h-24 border-8 border-gray-300 border-t-lime-400 rounded-full animate-spin"></div>
+        <p className="text-xl font-semibold tracking-wide animate-pulse bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 bg-clip-text text-transparent">
+          Analyserer data...
+        </p>
+      </div>
+    </div>
+  );
+
   const name = companyName ? companyName.replace(/[|–-].*$/, "").trim() : "";
 
   return (
-    <div className="flex flex-col gap-20 w-full">
-      {error && <p className="text-red-500 text-center">{error}</p>}
 
-      <div className="flex items-center w-4/6 mx-auto justify-between gap-2 bg-gray-900 p-2 rounded-lg">
-         <div className="relative w-full">
-            <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+  <div className="flex flex-col gap-20 w-full">
+    {error && <p className="text-red-500 text-center">{error}</p>}
 
-            <input
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://www.example.com"
-              className="bg-[hsl(222_47%_5%)] rounded-md pl-12 pr-3 py-2 w-full focus:border-lime-500 focus:ring-1 focus:ring-blue-500 outline-none"
-            />
-          </div>
-        <button
-          onClick={handleSubmit}
-          disabled={!url || isLoading}
-          className={`flex items-center justify-center gap-2 font-semibold py-2 px-3 rounded-md
-            ${isLoading || !url
-              ? "bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 text-gray-500 cursor-not-allowed"
-              : "cursor-pointer bg-gradient-to-r from-lime-500 to-green-700 text-white hover:from-lime-600 to-emerald-700"
-            }`}
-        >
-          <Search className="w-4 h-4" />
-          {isLoading ? "Analyserer..." : "Generér"}
-        </button>
+    {/* URL input + knap */}
+    <div className="flex items-center w-4/6 mx-auto justify-between gap-2 bg-gray-900 p-2 rounded-lg">
+      <div className="relative w-full">
+        <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+        <input
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="https://www.example.com"
+          className="bg-[hsl(222_47%_5%)] rounded-md pl-12 pr-3 py-2 w-full focus:border-lime-500 focus:ring-1 focus:ring-blue-500 outline-none"
+        />
       </div>
-      
-        <div className="w-4/6 mx-auto">
-           {summary && (
-            <div className="bg-gray-900 border border-stone-300 p-4 rounded-lg shadow-sm">
-              <h3 className="font-bold mb-1">{name}</h3>
-              <p className= "font-semibold ">{summary}</p>
-            </div>
-          )}   
-        </div> 
 
+      <button
+        onClick={handleSubmit}
+        disabled={!url || isLoading}
+        className={`flex items-center justify-center gap-2 font-semibold py-2 px-3 rounded-md
+          ${isLoading || !url
+            ? "bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 text-gray-500 cursor-not-allowed"
+            : "cursor-pointer bg-gradient-to-r from-lime-500 to-green-700 text-white hover:from-lime-600 to-emerald-700"
+          }`}
+      >
+        <Search className="w-4 h-4" />
+        {isLoading ? "Analyserer..." : "Generér"}
+      </button>
+    </div>
+
+    {/* Loading eller resultat */}
+    {isLoading ? (
+      <LoadingSpinner />
+    ) : (
+      <>
+        {/* Opsummering */}
+        <div className="w-4/6 mx-auto">
+          {summary && (
+            <div className="flex flex-col gap-6 bg-gray-900 border border-stone-800 p-4 rounded-lg shadow-sm">
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold mb-1">{name}</h3>
+                <p className="bg-blue-200 text-gray-900 text-sm rounded-2xl py-1 px-2.5">{branch}</p>
+              </div>              
+              <p className="font-semibold">{summary}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Roadmap titel */}
         {isDone && (
           <div className="flex flex-col items-center justify-center w-4/6 mx-auto gap-4">
-            <h3 className="text-shadow-sm text-xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-300 bg-clip-text text-transparent">AI Implementerings roadmap</h3>
-            <h4 className="sm:text-lg font-semibold">Skræddersyet anbefalinger til {name}</h4>
-          </div>        
+            <h3 className="text-shadow-sm text-xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-300 bg-clip-text text-transparent">
+              AI Implementerings roadmap
+            </h3>
+            <h4 className="sm:text-lg font-semibold">
+              Skræddersyet anbefalinger til {name}
+            </h4>
+          </div>
         )}
 
-        <div className="flex items-start justify-center gap-6 w-full">
+        {/* Anbefalinger */}
+        <div className="flex items-start justify-center gap-8 w-full">
           {recommendations.map((rec, i) => (
-            <div key={i} className="flex flex-col gap-4 bg-gray-900 p-4 border border-stone-300 rounded-lg w-full h-150">
+            <div
+              key={i}
+              className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-150
+              transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:border-lime-400"
+            >
               <div className="flex items-center justify-between px-2">
                 <div>
-                  {icons.map((iconObj, idx) => i === idx && (
-                    <span key={idx} className={iconObj.color}>
-                      {iconObj.icon}
-                    </span>
-                  ))}
+                  {icons.map(
+                    (iconObj, idx) =>
+                      i === idx && (
+                        <span key={idx} className={iconObj.color}>
+                          {iconObj.icon}
+                        </span>
+                      )
+                  )}
                 </div>
                 <h3 className="font-semibold text-center">{rec.type}</h3>
-                <p className="text-gray-200 text-sm">#{i+1}</p>
+                <p className="text-gray-200 text-sm">#{i + 1}</p>
               </div>
-                
-                {typeof rec.description === "string" ? (
+
+              {typeof rec.description === "string" ? (
                 <p>{rec.description}</p>
-                ) : (
-                <div className="flex flex-col justify-between h-full px-2 py-4">
-                  <div className="flex flex-col gap-6 h-2/5">
-                    <p className="text-xl font-semibold">{rec.title}</p>
-                    <p className="text-sm ">{rec.description.ai_solution}</p>
+              ) : (
+                <div className="flex flex-col justify-between gap-10 px-2 py-4 h-full">
+                  {/* Øverste sektion – titel og beskrivelse */}
+                  <div className="flex flex-col gap-6 flex-grow">
+                    <p className="text-xl font-semibold transition-colors duration-300 group-hover:text-lime-400">
+                      {rec.title}
+                    </p>
+                    <p className="text-sm">{rec.description.ai_solution}</p>
                   </div>
-                  <div className="h-1/5">
-                    <hr className="border-t-2 border-indigo-200" />
+
+                  {/* Midtersektion – tid, effekt, ROI */}
+                  <div>
+                    <hr className="border-t border-gray-500" />
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex flex-col justify-center gap-1">
                         <p className="text-xs text-gray-400">Tid</p>
-                        <p className="text-sm text-white font-semibold">{rec.time_estimate}</p>
+                        <p className="text-sm text-white font-semibold">
+                          {rec.time_estimate}
+                        </p>
                       </div>
                       <div className="flex flex-col justify-center gap-1">
                         <p className="text-xs text-gray-400">Effekt</p>
-                        <p className="text-sm text-white font-semibold">{rec.impact}</p>                        
+                        <p className="text-sm text-white font-semibold">
+                          {rec.impact}
+                        </p>
                       </div>
                       <div className="flex flex-col justify-center gap-1">
                         <p className="text-xs text-gray-400">ROI</p>
-                        <p className="text-sm text-white font-semibold">{rec.roi}</p>                        
+                        <p className="text-sm text-white font-semibold">
+                          {rec.roi}
+                        </p>
                       </div>
                     </div>
-                  </div>                   
-                  <div className="h-2/5 flex flex-col gap-4">
-                    <p className="text-sm "><strong>Forretningsbehov:</strong> {rec.description.business_need}</p>
-                    <p className="text-sm "><strong>Forventet resultat:</strong> {rec.description.expected_outcome}</p>
                   </div>
-                </div>                
-                )}  
+
+                  {/* Nederste sektion – outcomes */}
+                  <div className="flex flex-col gap-4">
+                    <ul className="list-disc list-inside mt-1 space-y-1 marker:text-lime-400 text-gray-200 text-sm">
+                      {Array.isArray(rec.description.expected_outcome) ? (
+                        rec.description.expected_outcome.map(
+                          (item: string, idx: number) => <li key={idx}>{item}</li>
+                        )
+                      ) : (
+                        <li>{rec.description.expected_outcome}</li>
+                      )}
+                    </ul>
+                  </div>
+                </div>
+              )}
             </div>
-            ))}
-        </div>     
-    </div>
-  );  
+          ))}
+        </div>
+      </>
+    )}
+  </div>
+);
 }

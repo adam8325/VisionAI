@@ -25,7 +25,7 @@ def analyze_url(data: UrlInput):
         return {
             "company_name": result.get("company_name"),
             "summary": result.get("summary"),
-            # "analysis": result.get("analysis"),
+            "branch": result.get("branch"),     
             "recommendations": result.get("recommendations")
         }
 

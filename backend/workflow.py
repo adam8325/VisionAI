@@ -4,6 +4,7 @@ from typing import TypedDict
 from langchain_openai import ChatOpenAI
 from firecrawl_service import FirecrawlService
 from prompts import DeveloperToolsPrompts
+from pydantic import BaseModel, Field
 from typing import List
 import json
 
@@ -16,11 +17,12 @@ class CompanyState(TypedDict):
     scraped_data: str
     summary: str
     analysis: str
+    branch: str
     recommendations: List[str] = []
-    time_estimate: str
-    impact: str
-    roi: str
+  
 
+class BranchOutput(BaseModel):
+    branch: str = Field(..., description="The main industry or branch of the company")
 
 
 def scrape_node(state: CompanyState):
@@ -59,14 +61,32 @@ def summarize_node(state: CompanyState):
 
 
 def analyze_node(state: CompanyState):
-    """Analyzes scraped content using LLM and prompts."""
-
     print("🧠 Analyzing company website...")
+
+    # Step 1: General analysis
     system_prompt = DeveloperToolsPrompts.ANALYSIS_SYSTEM
-    user_prompt = DeveloperToolsPrompts.analyse_prompt(state["url"], state["scraped_data"])
-    response = llm.invoke([{"role": "system", "content": system_prompt},
-                           {"role": "user", "content": user_prompt}])
-    return {"analysis": response.content}
+    user_prompt = DeveloperToolsPrompts.analyse_prompt(
+        state["company_name"], state["scraped_data"]
+    )
+    general_response = llm.invoke([
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ])
+    analysis_text = general_response.content.strip()
+
+    # Step 2: Extract branch using structured LLM
+    structured_llm = llm.with_structured_output(BranchOutput)
+    branch_response = structured_llm.invoke([
+        {"role": "user", "content": f"Extract only the branch from this analysis:\n\n{analysis_text}"}
+    ])
+
+    print("🏷️ Identified branch:", branch_response.branch)
+
+    return {
+        "analysis": analysis_text,
+        "branch": branch_response.branch
+    }
+
 
 
 def recommend_node(state: CompanyState):

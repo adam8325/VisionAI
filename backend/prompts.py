@@ -16,7 +16,8 @@ class DeveloperToolsPrompts:
 
 
     ANALYSIS_SYSTEM = """You are analyzing website data and looking for AI recommendations to implement. 
-                        Focus on extracting information that would be relevant to build features which are optimized using AI-technologies. Pay special attention to the company's branch, their values, services and customers."""
+                        Focus on extracting information that would be relevant to build features which are optimized using AI-technologies. Pay special attention to the company's branch, their values, services and customers.
+                        """
 
     @staticmethod
     def analyse_prompt(company_name: str, content: str) -> str:
@@ -24,9 +25,9 @@ class DeveloperToolsPrompts:
                 Website Content: {content[:2500]}
 
                 Analyze the above website content and provide:
-                - industry: Identify the main industry or sector the company belongs to.
                 - values_and_focus: Describe what values, goals, or focus areas the company seems to emphasize (e.g. innovation, sustainability, customer service).
                 - ai_opportunities: Briefly mention where AI might naturally fit based on what the company offers (e.g. automation, data analysis, customer engagement).
+                - Branch: Identify the main industry or sector the company belongs to. Short branch tag, e.g. \"Technology & Software\"", Save this as a JSON object {{...}}
 
                 Keep it concise and factual — the purpose is to confirm understanding of what this company does and identify potential AI-related entry points."""
 
@@ -47,10 +48,12 @@ class DeveloperToolsPrompts:
                 For each recommendation, provide:
                 - title: a short, expressive title for the proposed solution
                 - type: short label (e.g. "Hurtig Gevinst", "Målrettet Forbedring", "Strategisk Løft")
-                - description: an object with keys business_need, ai_solution, expected_outcome
-                - time_estimate: e.g. "2-3 weeks"
-                - impact: e.g. "High"
-                - roi: e.g. "3-6 months"
+                - description: an object with keys: 
+                  ai_solution: Describe the AI-solution in details and combine it with the business need it solves. Make it descriptive, and easy to understand for stakeholders. Don't exceede 20 lines.
+                  expected_outcome:  Include realistic outcome numbers either in percentages or numbers providing the company with a clear picture of the expected benefits - either in saved working time, increased revenue, improved customer satisfaction or expected savings. Use the language and terminology relevant to the company's industry. Make it short and precise, so it fits into a bullet point format. Max 5 words for each bullet point.(Must be a list of 4-6 bullet points). Use this format '[...]'
+                - time_estimate: e.g. "2-3 weeks" - this is an estimate of how long implementation might take
+                - impact: e.g. "High" - the expected impact level on the business from implementing the solution
+                - roi: e.g. "3-6 months" - estimated time to see return on investment
 
                 Example JSON output (must be valid JSON):
                 [
@@ -58,9 +61,12 @@ class DeveloperToolsPrompts:
                     "type": "Hurtig Gevinst",
                     "title": "Automated Payment Reminders",
                     "description": {{
-                      "business_need": "...",
                       "ai_solution": "...",
-                      "expected_outcome": "..."
+                      "expected_outcome": [
+                        "Increased efficiency by 20%",
+                        "Reduced late payments by 15%", 
+                        "Improved cash flow management by 10%"
+                      ]
                     }}, 
                     "time_estimate": "2-3 weeks",
                     "impact": "High",
