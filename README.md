@@ -2,6 +2,7 @@
 
 ## Kort og godt
 VisionAI analyserer et website og genererer **skræddersyede AI-anbefalinger** for virksomheden på sitet.  
+Opdag AI-muligheder for din virksomhed her: https://vision-ai-eosin.vercel.app/
 **Backend:** Python + FastAPI + LangChain + LangGraph + Pydantic + Firecrawl (scraper)  
 **Frontend:** React + Vite + Tailwind CSS
 
