@@ -25,6 +25,7 @@ export default function Input() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
   const isValidUrl = (value: string) => {
     try {
@@ -54,7 +55,7 @@ export default function Input() {
     setIsDone(false);
 
     try {
-      const res = await fetch("http://localhost:8000/api/analyze-url", {
+      const res = await fetch(`${API_BASE}/api/analyze-url`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
