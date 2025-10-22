@@ -17,6 +17,12 @@ class DeveloperToolsPrompts:
 
     ANALYSIS_SYSTEM = """You are analyzing website data and looking for AI recommendations to implement. 
                         Focus on extracting information that would be relevant to build features which are optimized using AI-technologies. Pay special attention to the company's branch, their values, services and customers.
+                        Return the result as valid JSON matching this structure:
+                        {
+                          "company_name": "formatted name of the company",
+                          "branch": "short label for the company's industry"
+                        }
+                        No extra text or explanation outside the JSON.
                         """
 
     @staticmethod

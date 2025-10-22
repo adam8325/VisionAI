@@ -86,7 +86,7 @@ export default function Input() {
    const LoadingSpinner = () => (
     <div className="flex items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-6">
-        <div className="w-24 h-24 border-8 border-gray-300 border-t-lime-400 rounded-full animate-spin"></div>
+        <div className="w-24 h-24 border-8 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
         <p className="text-xl font-semibold tracking-wide animate-pulse bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 bg-clip-text text-transparent">
           Analyserer data...
         </p>
@@ -119,12 +119,12 @@ export default function Input() {
         disabled={!url || isLoading}
         className={`flex items-center justify-center gap-2 font-semibold py-2 px-3 rounded-md
           ${isLoading || !url
-            ? "bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 text-gray-500 cursor-not-allowed"
-            : "cursor-pointer bg-gradient-to-r from-lime-500 to-green-700 text-white hover:from-lime-600 to-emerald-700"
+            ? "bg-gray-600 text-gray-500 cursor-not-allowed"
+            : "cursor-pointer bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 text-gray-900 hover:from-cyan-300 to-emerald-900"
           }`}
       >
         <Search className="w-4 h-4" />
-        {isLoading ? "Analyserer..." : "Generér"}
+         Analyser
       </button>
     </div>
 
@@ -138,7 +138,7 @@ export default function Input() {
           {summary && (
             <div className="flex flex-col gap-6 bg-gray-900 border border-stone-800 p-4 rounded-lg shadow-sm">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold mb-1">{name}</h3>
+                <h3 className="font-bold text-xl mb-1">{name}</h3>
                 <p className="bg-blue-200 text-gray-900 text-sm rounded-2xl py-1 px-2.5">{branch}</p>
               </div>              
               <p className="font-semibold">{summary}</p>
@@ -159,11 +159,11 @@ export default function Input() {
         )}
 
         {/* Anbefalinger */}
-        <div className="flex items-start justify-center gap-8 w-full">
+        <div className="flex items-start justify-center gap-8 w-full h-full">
           {recommendations.map((rec, i) => (
             <div
               key={i}
-              className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-150
+              className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-170
               transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:border-lime-400"
             >
               <div className="flex items-center justify-between px-2">
@@ -184,9 +184,9 @@ export default function Input() {
               {typeof rec.description === "string" ? (
                 <p>{rec.description}</p>
               ) : (
-                <div className="flex flex-col justify-between gap-10 px-2 py-4 h-full">
+                <div className="flex flex-col justify-between gap-10 px-1.5 py-4 h-full">
                   {/* Øverste sektion – titel og beskrivelse */}
-                  <div className="flex flex-col gap-6 flex-grow">
+                  <div className="flex flex-col gap-6 h-3/6">
                     <p className="text-xl font-semibold transition-colors duration-300 group-hover:text-lime-400">
                       {rec.title}
                     </p>
@@ -194,7 +194,7 @@ export default function Input() {
                   </div>
 
                   {/* Midtersektion – tid, effekt, ROI */}
-                  <div>
+                  <div className="h-1/6">
                     <hr className="border-t border-gray-500" />
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex flex-col justify-center gap-1">
@@ -219,7 +219,7 @@ export default function Input() {
                   </div>
 
                   {/* Nederste sektion – outcomes */}
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 h-2/6">
                     <ul className="list-disc list-inside mt-1 space-y-1 marker:text-lime-400 text-gray-200 text-sm">
                       {Array.isArray(rec.description.expected_outcome) ? (
                         rec.description.expected_outcome.map(
