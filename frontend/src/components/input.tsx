@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link2, Search, Zap, TrendingUp, Rocket } from "lucide-react";
 
 type Recommendation = {

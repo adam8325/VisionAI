@@ -1,4 +1,4 @@
-import { FileCode, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 
 export default function Header() {
