@@ -164,7 +164,7 @@ export default function Input() {
           {recommendations.map((rec, i) => (
             <div
               key={i}
-              className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-160 sm:h-160
+              className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-170 sm:h-170
               transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:border-lime-400 "
             >
               <div className="flex items-center justify-between px-2">
