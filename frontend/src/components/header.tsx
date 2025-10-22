@@ -15,7 +15,7 @@ export default function Header() {
           </div>
           <div className="text-center">    
               <h2 className="font-bold text-md sm:text-xl">
-                Opdag AI-muligheder til din virksomhed. Indtast din virksomheds webadresse for at modtage skræddersyede AI-optimeringsløsninger.
+                Opdag AI-muligheder for din virksomhed. Indtast din virksomheds webadresse og få skræddersyede AI-optimeringsløsninger.
               </h2>
           </div> 
         </div>
