@@ -32,7 +32,7 @@ export default function Input() {
       new URL(value); // native browser-validering
       return true;
     } catch {
-      return false;
+      return false;   
     }
   };
 
