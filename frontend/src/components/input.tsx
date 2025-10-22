@@ -118,13 +118,13 @@ export default function Input() {
       <button
         onClick={handleSubmit}
         disabled={!url || isLoading}
-        className={`flex items-center text-sm sm:text-lg justify-center gap-2 font-semibold py-1 px-2 sm:py-2 sm:px-3 rounded-md
+        className={`flex items-center text-[10px] sm:text-lg justify-center gap-2 font-semibold py-1 px-2 sm:py-2 sm:px-3 rounded-md
           ${isLoading || !url
             ? "bg-gray-600 text-gray-500 cursor-not-allowed"
             : "cursor-pointer bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 text-gray-900 hover:from-cyan-300 to-emerald-900"
           }`}
       >
-        <Search className="w-4 h-4" />
+        <Search className="hidden sm:inline w-4 h-4" />
          Analyser
       </button>
     </div>
@@ -164,8 +164,8 @@ export default function Input() {
           {recommendations.map((rec, i) => (
             <div
               key={i}
-              className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-160
-              transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:border-lime-400"
+              className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-140 sm:h-160
+              transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:border-lime-400 "
             >
               <div className="flex items-center justify-between px-2">
                 <div>
@@ -185,34 +185,34 @@ export default function Input() {
               {typeof rec.description === "string" ? (
                 <p>{rec.description}</p>
               ) : (
-                <div className="flex flex-col justify-between gap-10 px-1.5 py-4 h-full">
+                <div className="flex flex-col justify-between px-1.5 py-4 h-full">
                   {/* Øverste sektion – titel og beskrivelse */}
-                  <div className="flex flex-col gap-6 h-4/7">
+                  <div className="flex flex-col gap-2 sm:gap-6 h-3/6 sm:h-4/7">
                     <p className="text-xl font-semibold transition-colors duration-300 group-hover:text-lime-400 h-1/3">
                       {rec.title}
                     </p>
-                    <p className="text-sm h-2/3">{rec.description.ai_solution}</p>
+                    <p className="text-[13px] sm:text-sm h-2/3">{rec.description.ai_solution}</p>
                   </div>
 
                   {/* Midtersektion – tid, effekt, ROI */}
-                  <div className="h-1/7">
+                  <div className="h-1/6 sm:h-1/7 mt-10">
                     <hr className="border-t border-gray-500" />
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex flex-col justify-center gap-1">
-                        <p className="text-xs text-gray-400">Tid</p>
-                        <p className="text-sm text-white font-semibold">
+                        <p className="text-[10px] sm:text-xs text-gray-400">Tid</p>
+                        <p className="text-xs sm:text-sm text-white font-semibold">
                           {rec.time_estimate}
                         </p>
                       </div>
                       <div className="flex flex-col justify-center gap-1">
-                        <p className="text-xs text-gray-400">Effekt</p>
-                        <p className="text-sm text-white font-semibold">
+                        <p className="text-[10px] sm:text-xs text-gray-400">Effekt</p>
+                        <p className="text-xs sm:text-sm text-white font-semibold">
                           {rec.impact}
                         </p>
                       </div>
                       <div className="flex flex-col justify-center gap-1">
-                        <p className="text-xs text-gray-400">ROI</p>
-                        <p className="text-sm text-white font-semibold">
+                        <p className="text-[10px] sm:text-xs text-gray-400">ROI</p>
+                        <p className="text-xs sm:text-sm text-white font-semibold">
                           {rec.roi}
                         </p>
                       </div>
@@ -220,8 +220,8 @@ export default function Input() {
                   </div>
 
                   {/* Nederste sektion – outcomes */}
-                  <div className="flex flex-col gap-4 justify-start h-2/7">
-                    <ul className="list-disc list-inside mt-1 space-y-1 marker:text-lime-400 text-gray-200 text-sm">
+                  <div className="flex flex-col gap-4 justify-center h-1/6 sm:h-2/7">
+                    <ul className="list-disc list-inside mt-1 space-y-1 marker:text-lime-400 text-gray-200 text-xs sm:text-sm">
                       {Array.isArray(rec.description.expected_outcome) ? (
                         rec.description.expected_outcome.map(
                           (item: string, idx: number) => <li key={idx}>{item}</li>
