@@ -103,7 +103,7 @@ export default function Input() {
     {error && <p className="text-red-500 text-center">{error}</p>}
 
     {/* URL input + knap */}
-    <div className="flex items-center w-4/6 mx-auto justify-between gap-2 bg-gray-900 p-2 rounded-lg">
+    <div className="flex items-center w-4/6 mx-auto justify-between gap-2 bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 p-2 rounded-md">
       <div className="relative w-full">
         <Link2 className="absolute left-1.5 sm:left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 sm:w-5 sm:h-5" />
         <input
@@ -150,7 +150,7 @@ export default function Input() {
         {/* Roadmap titel */}
         {isDone && (
           <div className="flex flex-col items-center text-center justify-center w-4/6 mx-auto gap-4">
-            <h3 className="text-shadow-sm text-xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-300 bg-clip-text text-transparent">
+            <h3 className="text-shadow-sm leading-normal text-xl sm:text-3xl font-bold bg-gradient-to-r from-blue-100 via-cyan-300 to-sky-500 bg-clip-text text-transparent">
               AI Implementerings roadmap
             </h3>
             <h4 className="sm:text-lg font-semibold">
@@ -165,7 +165,7 @@ export default function Input() {
             <div
               key={i}
               className="group flex flex-col gap-4 bg-gray-900 p-4 border border-stone-800 rounded-lg w-full h-170 sm:h-170
-              transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:border-lime-400 "
+              transition-all duration-300 transform hover:scale-[1.03] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)] hover:border-cyan-400 "
             >
               <div className="flex items-center justify-between px-2">
                 <div>
@@ -188,7 +188,7 @@ export default function Input() {
                 <div className="flex flex-col gap-6 px-1.5 py-4 h-full">
                   {/* Øverste sektion – titel og beskrivelse */}
                   <div className="flex flex-col justify-between h-4/6 sm:h-4/7">
-                    <p className="text-xl font-semibold transition-colors duration-300 group-hover:text-lime-400 h-1/3">
+                    <p className="text-xl font-semibold transition-colors duration-300 group-hover:text-cyan-400 h-1/3">
                       {rec.title}
                     </p>
                     <p className="text-[13px] sm:text-sm h-2/3">{rec.description.ai_solution}</p>
@@ -221,7 +221,7 @@ export default function Input() {
 
                   {/* Nederste sektion – outcomes */}
                   <div className="flex flex-col justify-center h-1/6 sm:h-2/7 mb-1">
-                    <ul className="list-disc list-inside mt-1 space-y-2 marker:text-lime-400 text-gray-200 text-xs sm:text-sm">
+                    <ul className="list-disc list-inside mt-1 space-y-2 marker:text-cyan-300 text-gray-200 text-xs sm:text-sm">
                       {Array.isArray(rec.description.expected_outcome) ? (
                         rec.description.expected_outcome.map(
                           (item: string, idx: number) => <li key={idx}>{item}</li>

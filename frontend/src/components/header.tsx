@@ -8,7 +8,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Sparkles className="sm:w-10 sm:h-10 text-sky-100"/>
             <h1
-                className="text-shadow-sm text-4xl sm:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-cyan-500 to-lime-300 bg-clip-text text-transparent"
+                className="text-shadow-sm text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-100 via-cyan-300 to-sky-500 bg-clip-text text-transparent"
               >
                 VisionAI
               </h1>
@@ -18,6 +18,7 @@ export default function Header() {
                 Opdag AI-muligheder for din virksomhed. Indtast din virksomheds webadresse og få skræddersyede AI-optimeringsløsninger.
               </h2>
           </div> 
+          
         </div>
       </header>
     
