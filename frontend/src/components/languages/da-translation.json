@@ -1,0 +1,13 @@
+{
+  "intro":"Opdag AI-muligheder for din virksomhed. Indtast din virksomheds hjemmeside og få skræddersyede AI-optimeringsløsninger.",
+  "analyze": "Analyser",
+  "enter_url": "Indtast en URL først.",
+  "invalid_url": "Indtast en gyldig URL. F.eks. https://www.example.com",
+  "analyzing": "Analyserer hjemmeside...",
+  "ai_roadmap": "AI Implementerings Roadmap",
+  "custom_recommendations": "Skræddersyet anbefalinger til {{name}}",
+  "time": "Tid",
+  "impact": "Påvirkning",
+  "roi": "ROI",
+  "effect": "Effekt"
+}

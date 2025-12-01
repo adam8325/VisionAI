@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link2, Search, Zap, TrendingUp, Rocket } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type Recommendation = {
   title: string;
@@ -24,6 +25,7 @@ export default function Input() {
   const [branch, setBranch] = useState<string | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const { t, i18n } = useTranslation();
 
   const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -58,7 +60,10 @@ export default function Input() {
       const res = await fetch(`${API_BASE}/api/analyze-url`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ 
+          url, 
+          language: i18n.language,
+         }),
       });
 
       const data = await res.json();
@@ -89,7 +94,7 @@ export default function Input() {
       <div className="flex flex-col items-center justify-center gap-6">
         <div className="w-24 h-24 border-8 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
         <p className="text-xl font-semibold tracking-wide animate-pulse bg-linear-to-r from-cyan-100 via-blue-200 to-indigo-300 bg-clip-text text-transparent">
-          Analyserer data...
+          {t("analyzing")}
         </p>
       </div>
     </div>
@@ -103,7 +108,7 @@ export default function Input() {
     {error && <p className="text-red-500 text-center">{error}</p>}
 
     {/* URL input + knap */}
-    <div className="flex items-center w-4/6 mx-auto justify-between gap-2 bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 p-2 rounded-md">
+    <div className="flex items-center sm:w-4/6 mx-auto justify-between gap-2 bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 p-2 rounded-md">
       <div className="relative w-full">
         <Link2 className="absolute left-1.5 sm:left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 sm:w-5 sm:h-5" />
         <input
@@ -125,7 +130,7 @@ export default function Input() {
           }`}
       >
         <Search className="hidden sm:inline w-4 h-4" />
-         Analyser
+         {t("analyze")}
       </button>
     </div>
 
@@ -135,7 +140,7 @@ export default function Input() {
     ) : (
       <>
         {/* Opsummering */}
-        <div className="w-4/6 mx-auto">
+        <div className="sm:w-4/6 w-5/6 mx-auto">
           {summary && (
             <div className="flex flex-col gap-6 bg-gray-900 border border-stone-800 p-4 rounded-lg shadow-sm">
               <div className="flex gap-2 flex-row items-center justify-between">
@@ -149,18 +154,18 @@ export default function Input() {
 
         {/* Roadmap titel */}
         {isDone && (
-          <div className="flex flex-col items-center text-center justify-center w-4/6 mx-auto gap-4">
+          <div className="flex flex-col items-center text-center justify-center sm:w-4/6 w-5/6 mx-auto gap-4">
             <h3 className="text-shadow-sm leading-normal text-xl sm:text-3xl font-bold bg-gradient-to-r from-blue-100 via-cyan-300 to-sky-500 bg-clip-text text-transparent">
-              AI Implementerings roadmap
+              {t("ai_roadmap")}
             </h3>
             <h4 className="sm:text-lg font-semibold">
-              Skræddersyet anbefalinger til {name}
+              {t("custom_recommendations", { name })}
             </h4>
           </div>
         )}
 
         {/* Anbefalinger */}
-        <div className="flex flex-col sm:flex-row items-start justify-center gap-8 mx-auto w-3/4 sm:w-full h-full">
+        <div className="flex flex-col sm:flex-row items-start justify-center gap-8 mx-auto sm:w-full w-5/6 h-full">
           {recommendations.map((rec, i) => (
             <div
               key={i}
@@ -191,7 +196,7 @@ export default function Input() {
                     <p className="text-xl font-semibold transition-colors duration-300 group-hover:text-cyan-400 h-1/3">
                       {rec.title}
                     </p>
-                    <p className="text-[13px] sm:text-sm h-2/3">{rec.description.ai_solution}</p>
+                    <p className="text-sm sm:text-sm h-2/3">{rec.description.ai_solution}</p>
                   </div>
 
                   {/* Midtersektion – tid, effekt, ROI */}
@@ -199,19 +204,19 @@ export default function Input() {
                     <hr className="border-t border-gray-500" />
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex flex-col justify-center gap-1">
-                        <p className="text-[10px] sm:text-xs text-gray-400">Tid</p>
+                        <p className="text-[10px] sm:text-xs text-gray-400">{t("time")}</p>
                         <p className="text-xs sm:text-sm text-white font-semibold">
                           {rec.time_estimate}
                         </p>
                       </div>
                       <div className="flex flex-col justify-center gap-1">
-                        <p className="text-[10px] sm:text-xs text-gray-400">Effekt</p>
+                        <p className="text-[10px] sm:text-xs text-gray-400">{t("impact")}</p>
                         <p className="text-xs sm:text-sm text-white font-semibold">
                           {rec.impact}
                         </p>
                       </div>
                       <div className="flex flex-col justify-center gap-1">
-                        <p className="text-[10px] sm:text-xs text-gray-400">ROI</p>
+                        <p className="text-[10px] sm:text-xs text-gray-400">{t("roi")}</p>
                         <p className="text-xs sm:text-sm text-white font-semibold">
                           {rec.roi}
                         </p>
@@ -221,7 +226,7 @@ export default function Input() {
 
                   {/* Nederste sektion – outcomes */}
                   <div className="flex flex-col justify-center h-1/6 sm:h-2/7 mb-1">
-                    <ul className="list-disc list-inside mt-1 space-y-2 marker:text-cyan-300 text-gray-200 text-xs sm:text-sm">
+                    <ul className="list-disc list-inside mt-1 space-y-2 marker:text-cyan-300 text-gray-200 text-[12.5px] sm:text-sm">
                       {Array.isArray(rec.description.expected_outcome) ? (
                         rec.description.expected_outcome.map(
                           (item: string, idx: number) => <li key={idx}>{item}</li>

@@ -39,7 +39,7 @@ def summarize_node(state: CompanyState):
 
     print("📝 Generating short summary...")
     system_prompt = DeveloperToolsPrompts.SUMMARIZE_SYSTEM
-    user_prompt = DeveloperToolsPrompts.summarize_prompt(state["company_name"], state["scraped_data"])
+    user_prompt = DeveloperToolsPrompts.summarize_prompt(state["company_name"], state["scraped_data"], state.get("language", "en"))
     response = llm.invoke([{"role": "system", "content": system_prompt},
                            {"role": "user", "content": user_prompt}])
     return {"summary": response.content}
@@ -52,7 +52,8 @@ def analyze_node(state: CompanyState):
     system_prompt = DeveloperToolsPrompts.ANALYSIS_SYSTEM
     user_prompt = DeveloperToolsPrompts.analyse_prompt(
         state["company_name"],
-        state["scraped_data"]
+        state["scraped_data"], 
+        state.get("language", "en")
     )
 
     structured_llm = llm.with_structured_output(CompanyDetails)
@@ -82,7 +83,8 @@ def recommend_node(state: CompanyState):
     system_prompt = DeveloperToolsPrompts.RECOMMENDATIONS_SYSTEM
     user_prompt = DeveloperToolsPrompts.recommendation_prompt(
         state["company_name"],
-        state["analysis"]
+        state["analysis"], 
+        state.get("language", "en")
     )
 
     structured_llm = llm.with_structured_output(RecommendationsOutput)

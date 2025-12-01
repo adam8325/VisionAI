@@ -10,6 +10,7 @@ class CompanyState(TypedDict):
     analysis: str
     recommendations: List[dict]
     branch: str
+    language: str
 
 
 # ---------- Pydantic Models for LLM Structured Output ----------

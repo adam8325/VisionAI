@@ -1,0 +1,13 @@
+{
+  "intro":"Discover AI opportunities for your business. Enter your company's website and get tailored AI optimization solutions.",
+  "analyze": "Analyze",
+  "enter_url": "Enter a URL first.",
+  "invalid_url": "Enter a valid URL. E.g. https://www.example.com",
+  "analyzing": "Analyzing website...",
+  "ai_roadmap": "AI Implementation Roadmap",
+  "custom_recommendations": "Custom recommendations for {{name}}",
+  "time": "Time",
+  "impact": "Impact",
+  "roi": "ROI",
+  "effect": "Effect"
+}

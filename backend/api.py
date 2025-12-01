@@ -17,11 +17,12 @@ workflow = create_workflow()
 
 class UrlInput(BaseModel):
     url: str
+    language: str = "en"
 
 @app.post("/api/analyze-url")
 def analyze_url(data: UrlInput):
     try:
-        result = workflow.invoke({"url": data.url})
+        result = workflow.invoke({"url": data.url, "language": data.language})
         return {
             "company_name": result.get("company_name"),
             "summary": result.get("summary"),
