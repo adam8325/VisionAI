@@ -29,7 +29,7 @@ export default function Header() {
                 className="sm:text-xs text-[10px] flex items-center justify-center gap-1 bg-gray-800 px-1 py-1 sm:w-17 rounded-md cursor-pointer hover:bg-gray-700 transition-colors duration-200"
               >
                 <Globe className="size-3" />
-                {i18n.language === "da" ? "Dansk" : "English"}
+                {i18n.language === "da" ? "English" : "Dansk"}
               </button>
             </div>
           </div>
